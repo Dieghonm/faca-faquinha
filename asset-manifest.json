@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/faca-faquinha/static/css/main.073c9b0a.css",
+    "main.js": "/faca-faquinha/static/js/main.0c302ab5.js",
+    "static/js/787.e4fc4195.chunk.js": "/faca-faquinha/static/js/787.e4fc4195.chunk.js",
+    "static/media/carta.png": "/faca-faquinha/static/media/carta.598732b944f8e420693f.png",
+    "static/media/flor.png": "/faca-faquinha/static/media/flor.660bdb1c2b06c46e8264.png",
+    "index.html": "/faca-faquinha/index.html",
+    "main.073c9b0a.css.map": "/faca-faquinha/static/css/main.073c9b0a.css.map",
+    "main.0c302ab5.js.map": "/faca-faquinha/static/js/main.0c302ab5.js.map",
+    "787.e4fc4195.chunk.js.map": "/faca-faquinha/static/js/787.e4fc4195.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.0c302ab5.js"
+  ]
+}
