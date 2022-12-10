@@ -1,79 +1,93 @@
 import React, { useState, useEffect } from 'react';
 import KnifeCard from './KnifeCard';
-import faca from '../img/faca.png'
-import flor from '../img/flor.png'
 
 function KnifeGame() {
   const [num, setNum] = useState(0);
+  const [oponentCard, setOponentCard] = useState(0);
   const [result, setResult] = useState();
-  const [oponentResult, setOponentResult] = useState();
   const [playerTurn, setplayerTurn] = useState(true);
 
   const ranNum = (num) => {
     return Math.ceil (Math.random() * num)
   }
 
-  const newNumber = () => {
-    setNum(ranNum(6) - 1)
-  }
-
   useEffect(() => {
-    newNumber()
+    setNum(ranNum(6) - 1)
   })
 
-  const oponent = () => {
-    setplayerTurn(false)
-    const answer = ranNum(4) === ranNum(4)
-    setOponentResult(answer) 
-  }
-
-  const resultFunc = () => {
-    if (result === 'errou') {
-      return (
-        <>
-         '<img src={flor} alt="flor" />
-          <p>Voce escolheu uma faca falsa, e hora do seu adversario escolher uma</p>
-          <button onClick={oponent}>Clique aqui para o seu adversario jogar</button>
-        </>
-      )
-    }
-    if (result === 'acertou'){
-      return (
-        <>
-          <img src={faca} alt="faca" />
-          <p>Voce escolheu a faca verdadeira, Voce perdeu não só a partida...</p>
-          <button onClick={() => {newNumber(); setResult()}}>Jogar novamente</button>
-        </>
-      )
-    }
-  }
-
-  const oponentResultFunc = () => {
-    return oponentResult?
-        <>
-          <img src={flor} alt="flor" />
-          <p>Seu oponente escolheu uma faca falsa, vamos para outra rodada</p>
-          <button onClick={()=>{setResult(); setplayerTurn(true)}}>Clique aqui embaralhar as facas</button>
-        </>:<>
-          <img src={faca} alt="faca" />
-          <p>Seu oponente escolheu a faca verdadeira, parabens voce Ganheu a partida!!</p>
-          <button onClick={() => {newNumber(); setResult(); setplayerTurn(true)}}>Jogar novamente</button>
-        </>
-  }
-
   const cardCriator=()=>{
-    const Q = 6
     const arr = []
-    arr.push(<p key={'text'}>Escolha uma carta</p>)
+    const Q = 6
+    arr.push(<h3 key={'text'}>Escolha uma carta</h3>)
     for (let index = 0; index < Q; index++) {
-      arr.push(<KnifeCard key={index} num={num} index={index} setResult={setResult}/>)
+      arr.push(<KnifeCard key={index} num={num} index={index} setResult={checkResult} result={result}/>)
     }
     return arr
   }
 
+  const checkResult = (card) => {
+    if (!result && playerTurn) {
+      setResult(card)
+    }
+  }
+
+  const oponent = () => {
+    setNum(ranNum(playerTurn? 6: 4) )
+    setOponentCard(ranNum(6))
+    setResult()
+    setplayerTurn(!playerTurn)
+  }
+
+  const oponentChoice = () => {
+    setResult(num === oponentCard? 'acertou': 'errou')
+  }
+
+  const textCreator =() => {
+    if (playerTurn) {
+      if (result) {
+        if (result === 'errou') {
+          return (
+            <>
+              <p>Voce escolheu uma faca falsa, e hora do seu adversario escolher uma</p>
+              <button onClick={oponent}>Clique aqui para embaralhar as cartas</button>
+            </>
+          )
+        }
+        if (result === 'acertou'){
+          return (
+            <>
+              <p>Voce escolheu a faca verdadeira, Voce perdeu não só a partida...</p>
+              <button onClick={() => {setNum(ranNum(6) - 1); setResult()}}>Jogar novamente</button>
+            </>
+          )
+        }
+      }
+      return null
+    } else {
+      if (result) {
+        return result==='errou'?
+          <>
+            <p>Seu oponente escolheu uma faca falsa, vamos para outra rodada?</p>
+            <button onClick={oponent} >Clique aqui embaralhar as facas</button>
+          </>:<>
+            <p>Seu oponente escolheu a faca verdadeira, parabens voce Ganheu a partida!!</p>
+            <button onClick={oponent}>Jogar novamente</button>
+          </>
+      }else {
+        return (
+          <>
+            <p>Seu oponente ja escolheu uma carta</p>
+            <button onClick={oponentChoice}>Clique para ver a escolha dele</button>
+          </>
+      )
+      }
+    }
+  }
+
   return (
     <div className="App">
-      { playerTurn ? !result ? cardCriator() : resultFunc(): oponentResultFunc()}
+      {cardCriator()}
+      {textCreator()}
     </div>
   );
 }

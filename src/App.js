@@ -1,13 +1,18 @@
+import { useState } from 'react';
+import KnifeGame from './component/KnifeGame';
+
 import './App.css';
-// import KnifeGame from './component/KnifeGame';
-import TesteGame from './teste/TesteGame';
 
 function App() {
+  const [modal, setmodal] = useState('none')
+
   return (
     <div className="App">
-      {/* <button>Jogar Faca Faquinha</button> */}
-      {/* <KnifeGame /> */}
-      <TesteGame />
+      <button onClick={()=> setmodal('block')}>Jogar Faca Faquinha</button>
+      <div style={{display : modal}}>
+        <KnifeGame />
+        <button onClick={()=> setmodal('none')}>Sair</button>
+      </div>
     </div>
   );
 }
