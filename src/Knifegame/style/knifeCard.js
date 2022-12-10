@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
 export const CardButton = styled.button`
-margin: 2px;
   img {
-    margin: 2px;
+    padding: 2px;
     width:100px;
     height:150px;
     background-color:#666;
